@@ -1,9 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:iqra_library_app/Features/home/presentation/views/home_view.dart';
 import 'package:iqra_library_app/core/utils/assets.dart';
 
-class SplashViewBody extends StatelessWidget {
+class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
 
+  @override
+  State<SplashViewBody> createState() => _SplashViewBodyState();
+}
+
+class _SplashViewBodyState extends State<SplashViewBody>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation <Offset> slidingAnimation;
+
+  void initState() {
+    super.initState();
+    initslidingAnimation();
+
+    navigateToHome();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    animationController.dispose();
+  }
+  
+  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,15 +54,43 @@ class SplashViewBody extends StatelessWidget {
 
           ),),
 
-        Text('The more you read'
-            '\nThe more you grow'
-          , style: TextStyle(fontWeight: FontWeight.w500,
-              fontSize: 25
+        AnimatedBuilder(
+            animation: slidingAnimation,
+            builder: (context, _) {
+              return SlideTransition(
+                position: slidingAnimation,
+                child: const Text('The more you read'
+                    '\nThe more you grow'
+                  , style: TextStyle(fontWeight: FontWeight.w500,
+                      fontSize: 25
 
-          ),)
+                  ),),
+              );
+            }
+        )
 
       ],
 
     );
+
+  }
+
+  void initslidingAnimation() {
+    animationController = AnimationController(vsync: this,
+        duration: const Duration(seconds: 4));
+
+    slidingAnimation =
+        Tween<Offset>(begin: const Offset(0, 15), end: Offset.zero).animate(
+            animationController);
+
+    animationController.forward();
+  }
+
+  void navigateToHome() {
+    Future.delayed(const Duration(seconds: 2), () {
+      Get.to(() => const HomeView(),
+          transition: Transition.fade, duration: Duration(seconds: 5));
+    });
   }
 }
+
