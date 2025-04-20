@@ -20,16 +20,16 @@ class FeaturedListViewItem extends StatelessWidget {
   }
 }
 
-class FeaturedBooksListView extends StatelessWidget {
-  const FeaturedBooksListView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (context, index) {
-        return FeaturedListViewItem();
-      },
-    );
-  }
-}
+// class FeaturedBooksListView extends StatelessWidget {
+//   const FeaturedBooksListView({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView.builder(
+//       scrollDirection: Axis.horizontal,
+//       itemBuilder: (context, index) {
+//         return FeaturedListViewItem();
+//       },
+//     );
+//   }
+// }

@@ -17,6 +17,7 @@ class Iqra extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData().copyWith(
             scaffoldBackgroundColor: KprimaryColor
+
         ),
 
         home: const SplashView());
