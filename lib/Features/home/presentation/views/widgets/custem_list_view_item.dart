@@ -6,30 +6,14 @@ class FeaturedListViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 2.8 / 4,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-
-          image: const DecorationImage(
-            fit: BoxFit.fill,
-            image: AssetImage(AssetsData.book1),
-          ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Image.asset(
+          AssetsData.book1,
+          fit: BoxFit.cover,
         ),
       ),
     );
   }
 }
 
-// class FeaturedBooksListView extends StatelessWidget {
-//   const FeaturedBooksListView({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       scrollDirection: Axis.horizontal,
-//       itemBuilder: (context, index) {
-//         return FeaturedListViewItem();
-//       },
-//     );
-//   }
-// }
