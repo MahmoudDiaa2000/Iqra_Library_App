@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iqra_library_app/constants.dart';
+import 'package:iqra_library_app/core/theme/app_theme.dart';
 
 import 'Features/splash/presentation/view_models/views/splash_view.dart';
 
@@ -15,10 +15,9 @@ class Iqra extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData().copyWith(
-            scaffoldBackgroundColor: KprimaryColor
-
-        ),
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.system,
 
         home: const SplashView());
   }
