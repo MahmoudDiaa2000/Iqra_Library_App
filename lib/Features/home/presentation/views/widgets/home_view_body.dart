@@ -20,7 +20,8 @@ class HomeViewBody extends StatelessWidget {
           child: Text('Best Seller',
               style: Styles.textStyle18),
         ),
-        BestSellerListViewItem()
+        SizedBox(height: 20),
+        BBestSellerListViewItem()
       ],
     );
   }
@@ -31,10 +32,10 @@ class BestSellerListViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, top: 20),
-      child: SizedBox(
-        height: 120,
+    return SizedBox(
+      height: 120,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20),
         child: Row(
           children: [
             AspectRatio(
@@ -46,7 +47,16 @@ class BestSellerListViewItem extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
+            ),
+            SizedBox(width: 30,),
+            Column(
+              children: [
+                Text('Clean Code', style: Styles.textStyle20,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,)
+              ],
             )
+
           ],
         ),
       ),
