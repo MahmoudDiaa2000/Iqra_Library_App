@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iqra_library_app/Features/home/presentation/views/book_details_view.dart';
 import 'package:iqra_library_app/Features/home/presentation/views/home_view.dart';
 import 'package:iqra_library_app/Features/splash/presentation/view_models/views/splash_view.dart';
 
 abstract class AppRouter {
   static const kHomeView = '/homeView';
+  static const kBookDetailsView = '/bookDetailsView';
   static final GoRouter router = GoRouter(
     routes: <RouteBase>[
       GoRoute(
@@ -35,6 +37,13 @@ abstract class AppRouter {
               },
               transitionDuration: const Duration(seconds: 2),
             ),
+      ),
+
+      GoRoute(
+        path: kBookDetailsView,
+        builder: (BuildContext context, GoRouterState state) {
+          return const BookDetailsView();
+        },
       ),
     ],
   );
