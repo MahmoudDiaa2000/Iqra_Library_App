@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:iqra_library_app/core/theme/app_theme.dart';
-
-import 'Features/splash/presentation/view_models/views/splash_view.dart';
+import 'package:iqra_library_app/core/utils/app_router.dart';
 
 void main() {
   runApp(const Iqra());
@@ -13,13 +11,12 @@ class Iqra extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
+    return MaterialApp.router(
+      routerConfig: AppRouter.router,
+      debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.system,
-
-        home: const SplashView());
+    );
   }
-
 }
