@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iqra_library_app/Features/home/presentation/views/widgets/custem_list_view_item.dart';
+import 'package:iqra_library_app/Features/home/presentation/views/widgets/custom_book_item.dart';
 
 class FeaturedBooksListView extends StatelessWidget {
   const FeaturedBooksListView({super.key});
@@ -14,7 +14,7 @@ class FeaturedBooksListView extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 8),
-            child: FeaturedListViewItem(),
+            child: CustomBookImage(),
           );
         },
       ),

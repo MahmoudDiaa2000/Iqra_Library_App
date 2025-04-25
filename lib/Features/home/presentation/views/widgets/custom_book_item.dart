@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iqra_library_app/core/utils/assets.dart';
 
-class FeaturedListViewItem extends StatelessWidget {
+class CustomBookImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
