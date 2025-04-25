@@ -9,8 +9,11 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
       children: const [
         CustomAppBar(),
         FeaturedBooksListView(),
@@ -21,9 +24,34 @@ class HomeViewBody extends StatelessWidget {
               style: Styles.textStyle18),
         ),
         SizedBox(height: 20),
-        BestSellerListViewItem()
+      ],
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: BestSellerListView(),
+        ),
       ],
     );
+  }
+}
+
+
+class BestSellerListView extends StatelessWidget {
+  const BestSellerListView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      padding: EdgeInsets.zero,
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: const BestSellerListViewItem(),
+        );
+      },);
   }
 }
 
