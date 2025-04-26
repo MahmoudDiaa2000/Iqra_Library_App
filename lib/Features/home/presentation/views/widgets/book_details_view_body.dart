@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:iqra_library_app/Features/home/presentation/views/widgets/book_rating.dart';
 import 'package:iqra_library_app/Features/home/presentation/views/widgets/custom_book_details_app_bar.dart';
 import 'package:iqra_library_app/Features/home/presentation/views/widgets/custom_book_item.dart';
 import 'package:iqra_library_app/core/utils/styles.dart';
 
 class BookDetailsViewBody extends StatelessWidget {
-  const BookDetailsViewBody({super.key});
-
+  const BookDetailsViewBody({super.key });
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery
@@ -35,6 +35,10 @@ class BookDetailsViewBody extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 fontStyle: FontStyle.italic
             ),),
+          const SizedBox(
+            height: 18,
+          ),
+          BookRating(mainAxisAlignment: MainAxisAlignment.center,)
 
 
 
