@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:iqra_library_app/constants.dart';
-
-import 'Features/splash/presentation/view_models/views/splash_view.dart';
+import 'package:iqra_library_app/core/theme/app_theme.dart';
+import 'package:iqra_library_app/core/utils/app_config_provider.dart';
+import 'package:iqra_library_app/core/utils/app_router.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const Iqra());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AppConfigProvider(),
+      child: const Iqra(),
+    ),
+  );
 }
 
 class Iqra extends StatelessWidget {
@@ -13,13 +18,12 @@ class Iqra extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData().copyWith(
-            scaffoldBackgroundColor: KprimaryColor
-        ),
-
-        home: const SplashView());
+    return MaterialApp.router(
+      routerConfig: AppRouter.router,
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightMode,
+      darkTheme: AppTheme.darkMode,
+      themeMode: context.watch<AppConfigProvider>().appTheme,
+    );
   }
-
 }
