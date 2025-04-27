@@ -7,64 +7,57 @@ import 'package:iqra_library_app/Features/home/presentation/views/widgets/simila
 import 'package:iqra_library_app/core/utils/styles.dart';
 
 class BookDetailsViewBody extends StatelessWidget {
-  const BookDetailsViewBody({super.key });
+  const BookDetailsViewBody({super.key});
+
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30),
-      child: Column(
-        children: [
-          SafeArea(child: const CustomBookDetailsAppBar()),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: width * 0.17),
-            child: CustomBookImage(),
+    var width = MediaQuery.of(context).size.width;
 
+    return CustomScrollView(
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              children: [
+                const SafeArea(child: CustomBookDetailsAppBar()),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.17),
+                  child: CustomBookImage(),
+                ),
+                const SizedBox(height: 43),
+                Text('Clean Code', style: Styles.textStyle30),
+                const SizedBox(height: 6),
+                Text(
+                  'Robert C. Martin',
+                  style: Styles.textStyle18.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                const SizedBox(height: 18),
+                const BookRating(mainAxisAlignment: MainAxisAlignment.center),
+                const SizedBox(height: 40),
+                const BooksAction(),
+                const Spacer(),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'You can also like',
+                    style: Styles.textStyle14.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const SimilarBooksListView(),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 43,
-          ),
-          Text('Clean Code',
-            style: Styles.textStyle30,),
-          const SizedBox(
-            height: 6,
-          ),
-          Text(' Robert C. Martin',
-            style: Styles.textStyle18.copyWith(
-                fontWeight: FontWeight.w600,
-                fontStyle: FontStyle.italic
-            ),),
-          const SizedBox(
-            height: 18,
-          ),
-          BookRating(mainAxisAlignment: MainAxisAlignment.center,),
-          const SizedBox(
-            height: 40,
-          ),
-          const BooksAction(),
-          const SizedBox(
-            height: 50,
-          ),
-          Align(
-              alignment: Alignment.topLeft,
-              child: Text('You can also like',
-                style: Styles.textStyle14.copyWith(
-                    fontWeight: FontWeight.w600),)),
-          const SizedBox(
-            height: 16,
-          ),
-          SimilarBooksListView(),
-          const SizedBox(
-            height: 20,
-          ),
-
-
-
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
