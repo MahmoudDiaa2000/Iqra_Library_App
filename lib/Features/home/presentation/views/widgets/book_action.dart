@@ -13,9 +13,11 @@ class BooksAction extends StatelessWidget {
           Expanded(
             child: CustomButton(
               text: '20.00\$',
-              backgroundColor: Colors.grey,
-              textColor: Colors.black87,
-              borderRadius: BorderRadius.only(
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              textColor:
+                  Theme.of(context).textTheme.bodyMedium?.color ??
+                  Colors.black87,
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(16),
                 bottomLeft: Radius.circular(16),
               ),
@@ -26,7 +28,7 @@ class BooksAction extends StatelessWidget {
               text: 'Free preview',
               backgroundColor: Colors.amber,
               textColor: Colors.white,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(16),
                 bottomRight: Radius.circular(16),
               ),

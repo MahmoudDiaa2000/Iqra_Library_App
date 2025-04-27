@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:iqra_library_app/core/utils/styles.dart';
 
 class BookRating extends StatelessWidget {
-  const BookRating(
-      {super.key, this.mainAxisAlignment = MainAxisAlignment.start});
+  const BookRating({
+    super.key,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+  });
 
   final MainAxisAlignment mainAxisAlignment;
 
@@ -12,17 +13,33 @@ class BookRating extends StatelessWidget {
     return Row(
       mainAxisAlignment: mainAxisAlignment,
       children: [
-        const Icon(Icons.star, size: 14, color: Color(0xffFFDD4F)),
+        Icon(
+          Icons.star,
+          size: 14,
+          color: Colors.amber,
+        ),
         const SizedBox(width: 6.3),
-        const Text('4.8', style: Styles.textStyle16),
+        Text(
+          '4.8',
+          style: Theme
+              .of(context)
+              .textTheme
+              .bodySmall
+              ?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         const SizedBox(width: 5),
         Opacity(
-          opacity: .5,
+          opacity: 0.5,
           child: Text(
             '(2457)',
-            style: Styles.textStyle14.copyWith(
+            style: Theme
+                .of(context)
+                .textTheme
+                .bodySmall
+                ?.copyWith(
               fontWeight: FontWeight.w600,
-              color: const Color(0xff404040),
             ),
           ),
         ),

@@ -1,17 +1,103 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iqra_library_app/constants.dart';
 
 class AppTheme {
-  static ThemeData lightTheme = ThemeData(
-    scaffoldBackgroundColor: KprimaryColor,
-    brightness: Brightness.light,
-    textTheme: GoogleFonts.montserratTextTheme(),
+  static final ThemeData lightMode = ThemeData(
+    primaryColorLight: AppColors.primaryLightColor,
+    scaffoldBackgroundColor: Color(0xffe1e1e1),
+    // رمادي فاتح قوي
+    cardColor: Colors.white54,
+    appBarTheme: const AppBarTheme(
+      centerTitle: true,
+      backgroundColor: Colors.transparent,
+      // أو لون ثابت على حسب انت عايز Light / Dark
+      elevation: 0.0,
+      iconTheme: IconThemeData(color: Colors.black),
+      // Light Mode
+      titleTextStyle: TextStyle(
+        color: Colors.black,
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: Color(0xffe1e1e1),
+      selectedItemColor: AppColors.blackColor,
+      unselectedItemColor: AppColors.SceandrColor,
+      showUnselectedLabels: true,
+    ),
+
+    textTheme: TextTheme(
+      bodyLarge: TextStyle(
+        color: Colors.black,
+        fontSize: 30,
+        fontWeight: FontWeight.bold,
+      ),
+      bodyMedium: TextStyle(
+        color: Colors.black,
+        fontSize: 25,
+        fontWeight: FontWeight.w700,
+      ),
+      bodySmall: TextStyle(
+        color: Colors.black,
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+      ),
+      titleLarge: TextStyle(
+        color: Colors.black,
+        fontSize: 20,
+        fontWeight: FontWeight.w400,
+      ),
+    ),
   );
 
-  static ThemeData darkTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.black,
-    brightness: Brightness.dark,
-    textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
+  static final ThemeData darkMode = ThemeData(
+    primaryColorLight: AppColors.primaryDarkColor,
+    scaffoldBackgroundColor: AppColors.primaryDarkColor,
+    // (Color 0xff141A2E)
+    cardColor: AppColors.primaryDark2Color,
+    appBarTheme: const AppBarTheme(
+      centerTitle: true,
+      backgroundColor: Colors.transparent,
+      elevation: 0.0,
+      iconTheme: IconThemeData(color: Colors.white),
+      // Dark Mode
+      titleTextStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: AppColors.primaryDarkColor,
+      selectedItemColor: AppColors.whiteColor,
+      unselectedItemColor: AppColors.theirColor,
+      showUnselectedLabels: true,
+    ),
+    iconTheme: IconThemeData(color: AppColors.whiteColor),
+    textTheme: TextTheme(
+      bodyLarge: TextStyle(
+        color: AppColors.whiteColor,
+        fontSize: 30,
+        fontWeight: FontWeight.bold,
+      ),
+      bodyMedium: TextStyle(
+        color: AppColors.whiteColor,
+        fontSize: 25,
+        fontWeight: FontWeight.w700,
+      ),
+      bodySmall: TextStyle(
+        color: AppColors.whiteColor,
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+      ),
+      titleLarge: TextStyle(
+        color: AppColors.whiteColor,
+        fontSize: 20,
+        fontWeight: FontWeight.w400,
+      ),
+    ),
   );
 }

@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:iqra_library_app/core/theme/app_theme.dart';
+import 'package:iqra_library_app/core/utils/app_config_provider.dart';
 import 'package:iqra_library_app/core/utils/app_router.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const Iqra());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AppConfigProvider(),
+      child: const Iqra(),
+    ),
+  );
 }
 
 class Iqra extends StatelessWidget {
@@ -14,9 +21,9 @@ class Iqra extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: AppRouter.router,
       debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.system,
+      theme: AppTheme.lightMode,
+      darkTheme: AppTheme.darkMode,
+      themeMode: context.watch<AppConfigProvider>().appTheme,
     );
   }
 }

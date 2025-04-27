@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iqra_library_app/core/utils/app_router.dart';
-import 'package:iqra_library_app/core/utils/assets.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
@@ -13,75 +12,76 @@ class SplashViewBody extends StatefulWidget {
 class _SplashViewBodyState extends State<SplashViewBody>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
-  late Animation <Offset> slidingAnimation;
+  late Animation<Offset> slidingAnimation;
 
+  @override
   void initState() {
     super.initState();
     initslidingAnimation();
-
     navigateToHome();
   }
 
   @override
   void dispose() {
-    super.dispose();
     animationController.dispose();
+    super.dispose();
   }
-  
-  
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
-            Image.asset(AssetsData.logo,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.3,),
-
-
+            IconTheme(
+              data: IconThemeData(color: Theme.of(context).iconTheme.color),
+              child: Icon(Icons.auto_stories_outlined, size: 200),
+            ),
           ],
-
         ),
-        Text('IQRA'
-          , style: TextStyle(fontWeight: FontWeight.w900,
-              fontSize: 75
 
-          ),),
-
+        Text(
+          'IQRA',
+          style: theme.textTheme.bodyLarge?.copyWith(
+            fontWeight: FontWeight.w900,
+            fontSize: 75,
+          ),
+        ),
+        const SizedBox(height: 20),
         AnimatedBuilder(
-            animation: slidingAnimation,
-            builder: (context, _) {
-              return SlideTransition(
-                position: slidingAnimation,
-                child: const Text('The more you read'
-                    '\nThe more you grow'
-                  , style: TextStyle(fontWeight: FontWeight.w500,
-                      fontSize: 25
-
-                  ),),
-              );
-            }
-        )
-
+          animation: slidingAnimation,
+          builder: (context, _) {
+            return SlideTransition(
+              position: slidingAnimation,
+              child: Text(
+                'The more you read\nThe more you grow',
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 25,
+                ),
+              ),
+            );
+          },
+        ),
       ],
-
     );
-
   }
 
   void initslidingAnimation() {
-    animationController = AnimationController(vsync: this,
-        duration: const Duration(seconds: 4));
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 4),
+    );
 
-    slidingAnimation =
-        Tween<Offset>(begin: const Offset(0, 15), end: Offset.zero).animate(
-            animationController);
+    slidingAnimation = Tween<Offset>(
+      begin: const Offset(0, 15),
+      end: Offset.zero,
+    ).animate(animationController);
 
     animationController.forward();
   }
@@ -92,4 +92,3 @@ class _SplashViewBodyState extends State<SplashViewBody>
     });
   }
 }
-
