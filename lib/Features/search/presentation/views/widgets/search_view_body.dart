@@ -46,7 +46,7 @@ class SearchResultListView extends StatelessWidget {
           child: const BestSellerListViewItem(),
         );
       },
-    );;
+    );
   }
 }
 

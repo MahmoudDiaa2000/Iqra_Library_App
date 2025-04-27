@@ -23,8 +23,6 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
       body: AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
