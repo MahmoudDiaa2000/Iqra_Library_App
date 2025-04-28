@@ -31,21 +31,39 @@ class AudioBookView extends StatelessWidget {
               child: ListTile(
                 contentPadding: const EdgeInsets.all(16),
                 leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
+                  // borderRadius: BorderRadius.circular(8),
                   child: Image.asset(
                     bookimage,
-                    width: 50,
-                    height: 80,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.1,
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height * 1,
                     fit: BoxFit.cover,
                   ),
                 ),
                 title: Text(
                   'The Power Of Your Subconscious Mind',
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(
+                      fontSize: 16
+                  ),
                 ),
                 subtitle: Text(
                   'Joseph Murphy',
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(
+                      fontSize: 12
+                  ),
                 ),
 
                 trailing: Icon(

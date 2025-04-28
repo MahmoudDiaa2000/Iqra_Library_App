@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iqra_library_app/core/utils/app_config_provider.dart';
-import 'package:iqra_library_app/core/utils/assets.dart';
 import 'package:provider/provider.dart';
 
 class ProfileView extends StatelessWidget {
@@ -18,7 +17,8 @@ class ProfileView extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 100,
-            backgroundImage: AssetImage(AssetsData.profile),
+            backgroundImage: NetworkImage(
+                'https://unsplash.com/s/photos/profile'),
           ),
           const SizedBox(height: 16),
           Center(

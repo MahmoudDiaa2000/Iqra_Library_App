@@ -5,12 +5,12 @@ class AppTheme {
   static final ThemeData lightMode = ThemeData(
     primaryColorLight: AppColors.primaryLightColor,
     scaffoldBackgroundColor: Color(0xffe1e1e1),
-    // رمادي فاتح قوي
+
     cardColor: Colors.white54,
     appBarTheme: const AppBarTheme(
       centerTitle: true,
       backgroundColor: Colors.transparent,
-      // أو لون ثابت على حسب انت عايز Light / Dark
+
       elevation: 0.0,
       iconTheme: IconThemeData(color: Colors.black),
       // Light Mode

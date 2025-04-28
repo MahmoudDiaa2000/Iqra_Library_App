@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iqra_library_app/Features/home/data/models/book_model.dart';
 import 'package:iqra_library_app/Features/home/presentation/views/widgets/best_seller_list_viwe_item.dart'
     show BestSellerListViewItem;
 import 'package:iqra_library_app/Features/search/presentation/views/widgets/custom_search_text_filed.dart';
@@ -43,7 +44,14 @@ class SearchResultListView extends StatelessWidget {
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
-          child: const BestSellerListViewItem(),
+          child: BestSellerListViewItem(
+            bookModel: BookModel(
+              title: 'Test Book',
+              authors: 'Test Author',
+              thumbnail: '',
+            ),
+          ),
+
         );
       },
     );
