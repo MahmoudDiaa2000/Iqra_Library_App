@@ -41,7 +41,7 @@ class AppTheme {
       ),
       bodySmall: TextStyle(
         color: Colors.black,
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: FontWeight.bold,
       ),
       titleLarge: TextStyle(
@@ -90,7 +90,7 @@ class AppTheme {
       ),
       bodySmall: TextStyle(
         color: AppColors.whiteColor,
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: FontWeight.bold,
       ),
       titleLarge: TextStyle(

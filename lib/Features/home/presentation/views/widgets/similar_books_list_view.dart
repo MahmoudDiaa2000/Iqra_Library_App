@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:iqra_library_app/Features/home/presentation/views/widgets/custom_book_item.dart';
+import 'package:go_router/go_router.dart';
+import 'package:iqra_library_app/Features/home/data/models/book_model.dart';
+import 'package:iqra_library_app/core/utils/app_router.dart';
 
 class SimilarBooksListView extends StatelessWidget {
-  const SimilarBooksListView({super.key});
+  final List<BookModel> books;
+
+  const SimilarBooksListView({super.key, required this.books});
 
   @override
   Widget build(BuildContext context) {
@@ -11,11 +15,33 @@ class SimilarBooksListView extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 8),
-        itemCount: 10,
+        itemCount: books.length,
         itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: CustomBookImage(),
+          final book = books[index];
+          return GestureDetector(
+            onTap: () {
+              GoRouter.of(context).push(
+                AppRouter.kBookDetailsView,
+                extra: {
+                  'bookModel': book,
+                  'books': books,
+                },
+              );
+            },
+
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  book.thumbnail ?? 'https://via.placeholder.com/150',
+                  fit: BoxFit.cover,
+                  width: 100,
+                  errorBuilder: (context, error, stackTrace) =>
+                  const Icon(Icons.book),
+                ),
+              ),
+            ),
           );
         },
       ),

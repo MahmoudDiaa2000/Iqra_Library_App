@@ -1,19 +1,15 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 class ApiService {
-  static Future<List<dynamic>> fetchBooks(String query) async {
-    final url = Uri.parse(
-      'https://www.googleapis.com/books/v1/volumes?q=$query',
-    );
-    final response = await http.get(url);
+  final Dio _dio;
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      return data['items'];
-    } else {
-      throw Exception('Failed to load books');
-    }
+  ApiService()
+      : _dio = Dio(BaseOptions(
+    baseUrl: 'https://www.googleapis.com/books/v1/',
+  ));
+
+  Future<Map<String, dynamic>> get({required String endPoint}) async {
+    final response = await _dio.get(endPoint);
+    return response.data;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iqra_library_app/Features/Profile/presentation/views/profile_view.dart';
+import 'package:iqra_library_app/Features/home/data/models/book_model.dart';
 import 'package:iqra_library_app/Features/home/presentation/views/book_details_view.dart';
 import 'package:iqra_library_app/Features/home/presentation/views/home_view.dart';
 import 'package:iqra_library_app/Features/search/presentation/views/search_view.dart';
@@ -20,6 +21,7 @@ abstract class AppRouter {
           return const SplashView();
         },
       ),
+
 
       GoRoute(
           path: kSearchView,
@@ -46,10 +48,22 @@ abstract class AppRouter {
 
       GoRoute(
         path: kBookDetailsView,
-        builder: (BuildContext context, GoRouterState state) {
-          return const BookDetailsView();
+        pageBuilder: (context, state) {
+          final data = state.extra as Map<String, dynamic>;
+          final book = data['bookModel'] as BookModel;
+          final books = data['books'] as List<BookModel>;
+
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: BookDetailsView(bookModel: book, books: books),
+            transitionsBuilder: (context, animation, secondaryAnimation,
+                child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+          );
         },
       ),
+
 
       GoRoute(
         path: kProfileView,

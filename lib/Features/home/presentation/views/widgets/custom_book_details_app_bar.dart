@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:iqra_library_app/core/utils/app_router.dart';
 
 class CustomBookDetailsAppBar extends StatelessWidget {
   const CustomBookDetailsAppBar({super.key});
@@ -9,19 +11,12 @@ class CustomBookDetailsAppBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            GoRouter.of(context).go(AppRouter.kHomeView);
+          }
+          ,
           icon: Icon(
             Icons.close,
-            color: Theme
-                .of(context)
-                .iconTheme
-                .color,
-          ),
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.shopping_cart_outlined,
             color: Theme
                 .of(context)
                 .iconTheme
