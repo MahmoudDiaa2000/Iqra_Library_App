@@ -1,30 +1,30 @@
 class BookModel {
   final String title;
   final List<String> authors;
-  final String? image;
   final String? thumbnail;
   final String? description;
-  final double? averageRating;
-  final int? ratingsCount;
   final String? previewLink;
+  final String? buyLink;
   final String? accessLink;
   final String? price;
-  final String? buyLink;
   final bool isFree;
+  final String? infoLink;
+  final double? averageRating;
+  final int? ratingsCount;
 
   BookModel({
     required this.title,
     required this.authors,
-    this.image,
     this.thumbnail,
     this.description,
-    this.averageRating,
-    this.ratingsCount,
     this.previewLink,
+    this.buyLink,
     this.accessLink,
     this.price,
-    this.buyLink,
     required this.isFree,
+    this.infoLink,
+    this.averageRating,
+    this.ratingsCount,
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
@@ -34,18 +34,19 @@ class BookModel {
 
     return BookModel(
       title: volumeInfo['title'] ?? 'No Title',
-      authors: (volumeInfo['authors'] as List?)?.cast<String>() ?? [],
-      image: volumeInfo['imageLinks']?['smallThumbnail'],
+      authors:
+          (volumeInfo['authors'] as List?)?.cast<String>() ??
+          ['Unknown Author'],
       thumbnail: volumeInfo['imageLinks']?['thumbnail'],
       description: volumeInfo['description'],
-      averageRating: (volumeInfo['averageRating'] as num?)?.toDouble(),
-      ratingsCount: volumeInfo['ratingsCount'],
       previewLink: volumeInfo['previewLink'],
-      accessLink: accessInfo['webReaderLink'],
       buyLink: saleInfo['buyLink'],
-      price: saleInfo['retailPrice']?['amount']?.toString(),
+      accessLink: accessInfo['webReaderLink'],
+      price: saleInfo['listPrice']?['amount']?.toString(),
       isFree: saleInfo['saleability'] == 'FREE',
+      infoLink: volumeInfo['infoLink'],
+      averageRating: (volumeInfo['averageRating'] as num?)?.toDouble(),
+      ratingsCount: volumeInfo['ratingsCount'] as int?,
     );
   }
 }
-

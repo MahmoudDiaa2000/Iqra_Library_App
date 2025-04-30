@@ -98,6 +98,11 @@ class AppTheme {
         fontSize: 20,
         fontWeight: FontWeight.w400,
       ),
+      titleSmall: TextStyle(
+        color: AppColors.blackColor,
+        fontSize: 40,
+        fontWeight: FontWeight.w400,
+      ),
     ),
   );
 }
