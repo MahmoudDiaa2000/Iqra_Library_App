@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iqra_library_app/Features/Profile/presentation/views/profile_view.dart';
+import 'package:iqra_library_app/Features/audiobook/data/models/podcast_model.dart';
+import 'package:iqra_library_app/Features/audiobook/presentation/views/auido_player_view.dart';
 import 'package:iqra_library_app/Features/home/data/models/book_model.dart';
 import 'package:iqra_library_app/Features/home/presentation/views/book_details_view.dart';
 import 'package:iqra_library_app/Features/home/presentation/views/home_view.dart';
@@ -9,9 +11,12 @@ import 'package:iqra_library_app/Features/splash/presentation/view_models/views/
 
 abstract class AppRouter {
   static const kHomeView = '/homeView';
+  static const kAudioBookView = 'audiobookView';
+  static const kAudioPlayerView = '/audioPlayer';
   static const kBookDetailsView = '/bookDetailsView';
   static const kSearchView = '/searchView';
   static const kProfileView = '/profileView';
+
 
   static final GoRouter router = GoRouter(
     routes: <RouteBase>[
@@ -19,6 +24,23 @@ abstract class AppRouter {
         path: '/',
         builder: (BuildContext context, GoRouterState state) {
           return const SplashView();
+        },
+      ),
+
+
+      GoRoute(
+        path: kAudioPlayerView,
+        builder: (context, state) {
+          final podcast = state.extra as PodcastModel;
+          return AudioPlayerView(audio: podcast);
+        },
+      ),
+
+      GoRoute(
+        path: AppRouter.kAudioPlayerView,
+        builder: (context, state) {
+          final podcast = state.extra as PodcastModel;
+          return AudioPlayerView(audio: podcast);
         },
       ),
 
@@ -45,7 +67,6 @@ abstract class AppRouter {
               transitionDuration: const Duration(seconds: 2),
             ),
       ),
-
       GoRoute(
         path: kBookDetailsView,
         pageBuilder: (context, state) {
@@ -63,8 +84,6 @@ abstract class AppRouter {
           );
         },
       ),
-
-
       GoRoute(
         path: kProfileView,
         builder: (context, state) => const ProfileView(),
