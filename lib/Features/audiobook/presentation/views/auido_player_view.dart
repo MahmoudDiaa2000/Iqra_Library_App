@@ -46,7 +46,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(widget.audio.title)));
+        appBar: AppBar(title: Text(widget.audio.title)),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -151,7 +151,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView> {
           ],
         ),
 
-    );
+      ));
 
   }
 
