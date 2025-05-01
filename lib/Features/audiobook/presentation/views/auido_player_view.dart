@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:iqra_library_app/Features/audiobook/data/models/podcast_model.dart';
 import 'package:just_audio/just_audio.dart';
 
 class AudioPlayerView extends StatefulWidget {
-  final List<AudioBookModel> audioBooks;
-  final int initialIndex;
+  final PodcastModel audio;
 
-  const AudioPlayerView({
-    super.key,
-    required this.audioBooks,
-    this.initialIndex = 0,
-  });
+  const AudioPlayerView({super.key, required this.audio});
 
   @override
   State<AudioPlayerView> createState() => _AudioPlayerViewState();
@@ -17,46 +13,28 @@ class AudioPlayerView extends StatefulWidget {
 
 class _AudioPlayerViewState extends State<AudioPlayerView> {
   late AudioPlayer _audioPlayer;
-  late int _currentIndex;
-  bool isPlaying = false;
-  Duration _position = Duration.zero;
-  Duration _duration = Duration.zero;
 
   @override
   void initState() {
     super.initState();
-    _currentIndex = widget.initialIndex;
     _audioPlayer = AudioPlayer();
-    _initializePlayer();
+    _initPlayer();
   }
 
-  Future<void> _initializePlayer() async {
-    await _setAudio();
-    _audioPlayer.positionStream.listen((position) {
-      setState(() {
-        _position = position;
-      });
-    });
+  Future<void> _initPlayer() async {
+    try {
+      await _audioPlayer.stop();
 
-    _audioPlayer.durationStream.listen((duration) {
-      setState(() {
-        _duration = duration ?? Duration.zero;
-      });
-    });
-
-    _audioPlayer.playerStateStream.listen((state) {
-      if (state.processingState == ProcessingState.completed) {
-        _audioPlayer.seek(Duration.zero);
-        _audioPlayer.pause();
-        setState(() {
-          isPlaying = false;
-        });
+      if (widget.audio.audio.isEmpty) {
+        throw Exception('Audio URL is empty');
       }
-    });
-  }
 
-  Future<void> _setAudio() async {
-    await _audioPlayer.setUrl(widget.audioBooks[_currentIndex].audioUrl);
+      await _audioPlayer.setUrl(widget.audio.audio);
+
+      await _audioPlayer.load();
+    } catch (e) {
+      debugPrint('Error loading audio: $e');
+    }
   }
 
   @override
@@ -65,168 +43,121 @@ class _AudioPlayerViewState extends State<AudioPlayerView> {
     super.dispose();
   }
 
-  void _togglePlayPause() {
-    if (isPlaying) {
-      _audioPlayer.pause();
-    } else {
-      _audioPlayer.play();
-    }
-    setState(() {
-      isPlaying = !isPlaying;
-    });
-  }
-
-  void _rewind5Seconds() {
-    final currentPosition = _audioPlayer.position;
-    final newPosition = currentPosition - const Duration(seconds: 5);
-    _audioPlayer.seek(
-      newPosition > Duration.zero ? newPosition : Duration.zero,
-    );
-  }
-
-  void _forward5Seconds() {
-    final currentPosition = _audioPlayer.position;
-    final duration = _audioPlayer.duration;
-
-    if (duration != null) {
-      final newPosition = currentPosition + const Duration(seconds: 5);
-      _audioPlayer.seek(newPosition < duration ? newPosition : duration);
-    }
-  }
-
-  String _formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    final minutes = twoDigits(duration.inMinutes.remainder(60));
-    final seconds = twoDigits(duration.inSeconds.remainder(60));
-    return "$minutes:$seconds";
-  }
-
   @override
   Widget build(BuildContext context) {
-    final currentBook = widget.audioBooks[_currentIndex];
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Now Playing',
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        centerTitle: true,
-      ),
+        appBar: AppBar(title: Text(widget.audio.title)),
       body: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Image.asset(
-                currentBook.imagePath,
-                width: 200,
-                height: 300,
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(
+                widget.audio.image,
+                height: 200,
                 fit: BoxFit.cover,
               ),
             ),
             const SizedBox(height: 20),
             Text(
-              currentBook.title,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+              widget.audio.title,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headlineSmall,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
-              currentBook.author,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(fontStyle: FontStyle.italic),
-              textAlign: TextAlign.center,
+              widget.audio.publisher,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .titleMedium,
             ),
-            const SizedBox(height: 30),
+            const Spacer(),
 
-            // 🎚️ Progress Bar
-            SliderTheme(
-              data: SliderTheme.of(context).copyWith(
-                activeTrackColor: Colors.white,
-                inactiveTrackColor: Colors.white38,
-                thumbColor: Colors.amber,
-              ),
-              child: Slider(
-                min: 0,
-                max: _duration.inSeconds.toDouble(),
-                value: _position.inSeconds.toDouble().clamp(
-                  0,
-                  _duration.inSeconds.toDouble(),
-                ),
-                onChanged: (value) {
-                  _audioPlayer.seek(Duration(seconds: value.toInt()));
-                },
-              ),
+            // Slider
+            StreamBuilder<Duration>(
+              stream: _audioPlayer.positionStream,
+              builder: (context, snapshot) {
+                final position = snapshot.data ?? Duration.zero;
+                final total = _audioPlayer.duration ?? Duration.zero;
+                return Column(
+                  children: [
+                    Slider(
+                      value: position.inSeconds.toDouble(),
+                      max: total.inSeconds.toDouble(),
+                      onChanged: (value) {
+                        _audioPlayer.seek(Duration(seconds: value.toInt()));
+                      },
+                    ),
+                    Text(
+                      "${_formatTime(position)} / ${_formatTime(total)}",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                );
+              },
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  _formatDuration(_position),
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                Text(
-                  _formatDuration(_duration),
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
 
+            // Controls
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                  onPressed: _rewind5Seconds,
-                  icon: Icon(
-                    Icons.replay_5,
-                    size: 48,
-                    color: Theme.of(context).iconTheme.color,
-                  ),
+                  icon: const Icon(Icons.replay_10),
+                  iconSize: 36,
+                  onPressed: () {
+                    final newPosition = _audioPlayer.position -
+                        const Duration(seconds: 10);
+                    _audioPlayer.seek(
+                        newPosition > Duration.zero ? newPosition : Duration
+                            .zero);
+                  },
+                ),
+                StreamBuilder<PlayerState>(
+                  stream: _audioPlayer.playerStateStream,
+                  builder: (context, snapshot) {
+                    final isPlaying = snapshot.data?.playing ?? false;
+                    return IconButton(
+                      icon: Icon(
+                        isPlaying ? Icons.pause_circle_filled : Icons
+                            .play_circle_fill,
+                      ),
+                      iconSize: 64,
+                      onPressed: () {
+                        isPlaying ? _audioPlayer.pause() : _audioPlayer.play();
+                      },
+                    );
+                  },
                 ),
                 IconButton(
-                  onPressed: _togglePlayPause,
-                  icon: Icon(
-                    isPlaying
-                        ? Icons.pause_circle_filled
-                        : Icons.play_circle_fill,
-                    size: 64,
-                    color: Theme.of(context).iconTheme.color,
-                  ),
-                ),
-                IconButton(
-                  onPressed: _forward5Seconds,
-                  icon: Icon(
-                    Icons.forward_5,
-                    size: 48,
-                    color: Theme.of(context).iconTheme.color,
-                  ),
+                  icon: const Icon(Icons.forward_10),
+                  iconSize: 36,
+                  onPressed: () {
+                    final max = _audioPlayer.duration ?? Duration.zero;
+                    final newPosition = _audioPlayer.position +
+                        const Duration(seconds: 10);
+                    if (newPosition < max) {
+                      _audioPlayer.seek(newPosition);
+                    }
+                  },
                 ),
               ],
             ),
+            const Spacer(),
           ],
         ),
-      ),
-    );
+
+      ));
+
   }
-}
 
-class AudioBookModel {
-  final String title;
-  final String author;
-  final String audioUrl;
-  final String imagePath;
-
-  AudioBookModel({
-    required this.title,
-    required this.author,
-    required this.audioUrl,
-    required this.imagePath,
-  });
+  String _formatTime(Duration duration) {
+    final minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
+  }
 }

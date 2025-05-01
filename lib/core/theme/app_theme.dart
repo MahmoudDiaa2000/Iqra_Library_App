@@ -5,12 +5,12 @@ class AppTheme {
   static final ThemeData lightMode = ThemeData(
     primaryColorLight: AppColors.primaryLightColor,
     scaffoldBackgroundColor: Color(0xffe1e1e1),
-    // رمادي فاتح قوي
+
     cardColor: Colors.white54,
     appBarTheme: const AppBarTheme(
       centerTitle: true,
       backgroundColor: Colors.transparent,
-      // أو لون ثابت على حسب انت عايز Light / Dark
+
       elevation: 0.0,
       iconTheme: IconThemeData(color: Colors.black),
       // Light Mode
@@ -41,7 +41,7 @@ class AppTheme {
       ),
       bodySmall: TextStyle(
         color: Colors.black,
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: FontWeight.bold,
       ),
       titleLarge: TextStyle(
@@ -90,12 +90,17 @@ class AppTheme {
       ),
       bodySmall: TextStyle(
         color: AppColors.whiteColor,
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: FontWeight.bold,
       ),
       titleLarge: TextStyle(
         color: AppColors.whiteColor,
         fontSize: 20,
+        fontWeight: FontWeight.w400,
+      ),
+      titleSmall: TextStyle(
+        color: AppColors.blackColor,
+        fontSize: 40,
         fontWeight: FontWeight.w400,
       ),
     ),

@@ -1,38 +1,97 @@
 import 'package:flutter/material.dart';
+import 'package:iqra_library_app/Features/home/data/models/book_model.dart';
 import 'package:iqra_library_app/Features/home/presentation/views/widgets/book_action.dart';
 import 'package:iqra_library_app/Features/home/presentation/views/widgets/book_rating.dart';
-import 'package:iqra_library_app/Features/home/presentation/views/widgets/custom_book_item.dart';
-import 'package:iqra_library_app/core/utils/styles.dart';
+import 'package:iqra_library_app/Features/home/presentation/views/widgets/custom_book_image.dart';
 
-class BookDetailsSection extends StatelessWidget {
-  const BookDetailsSection({super.key});
+class BooksDetailsSection extends StatelessWidget {
+  final BookModel bookModel;
+
+  const BooksDetailsSection({super.key, required this.bookModel});
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
+    var width = MediaQuery
+        .of(context)
+        .size
+        .width;
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        // صورة الكتاب
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: width * 0.17),
-          child: CustomBookImage(),
+          padding: EdgeInsets.symmetric(horizontal: width * 0.2),
+          child: CustomBookImage(
+            imageUrl: bookModel.thumbnail ?? 'https://via.placeholder.com/150',
+          ),
         ),
-        const SizedBox(height: 43),
-        Text('Clean Code', style: Styles.textStyle30),
-        const SizedBox(height: 6),
+
+        const SizedBox(height: 24),
+
+        // اسم الكتاب
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            bookModel.title,
+            style: Theme
+                .of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(fontSize: 22),
+            textAlign: TextAlign.center,
+          ),
+        ),
+
+        const SizedBox(height: 10),
+
+        // اسم المؤلف
         Text(
-          'Robert C. Martin',
-          style: Styles.textStyle18.copyWith(
+          bookModel.authors.isNotEmpty
+              ? bookModel.authors.join(', ')
+              : 'Unknown Author',
+          style: Theme
+              .of(context)
+              .textTheme
+              .bodySmall
+              ?.copyWith(
             fontWeight: FontWeight.w600,
             fontStyle: FontStyle.italic,
           ),
+          textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 18),
-        const BookRating(mainAxisAlignment: MainAxisAlignment.center),
-        const SizedBox(height: 40),
-        const BooksAction(),
-        const SizedBox(height: 40),
+
+        const SizedBox(height: 20),
+
+        // وصف الكتاب
+        if (bookModel.description != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              bookModel.description!,
+              textAlign: TextAlign.justify,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .titleLarge,
+              maxLines: 8,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+
+        const SizedBox(height: 24),
+
+        // التقييم
+        BookRating(bookModel: bookModel),
+
+        const SizedBox(height: 32),
+
+        // زر الشراء
+        BooksAction(bookModel: bookModel),
+
+        const SizedBox(height: 30),
       ],
     );
   }
 }
+

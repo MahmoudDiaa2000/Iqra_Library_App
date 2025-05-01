@@ -1,39 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:iqra_library_app/core/utils/styles.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({
-    super.key,
-    required this.backgroundColor,
-    required this.text,
-    required this.textColor,
-    this.borderRadius,
-  });
-
   final String text;
-
   final Color backgroundColor;
   final Color textColor;
-  final BorderRadius? borderRadius;
+  final BorderRadius borderRadius;
+  final VoidCallback? onPressed; // ADD THIS
+
+  const CustomButton({
+    super.key,
+    required this.text,
+    required this.backgroundColor,
+    required this.textColor,
+    required this.borderRadius,
+    this.onPressed, // ADD THIS
+  });
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {},
-      style: TextButton.styleFrom(
+    return ElevatedButton(
+      onPressed: onPressed, // ADD THIS
+      style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor,
-
-        shape: RoundedRectangleBorder(
-          borderRadius: borderRadius ?? BorderRadius.circular(18),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: borderRadius),
       ),
-      child: Text(
-        text,
-        style: Styles.textStyle20.copyWith(
-          color: textColor,
-          fontWeight: FontWeight.w900,
-        ),
-      ),
+      child: Text(text, style: TextStyle(color: textColor)),
     );
   }
 }
