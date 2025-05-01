@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:iqra_library_app/Features/audiobook/data/models/podcast_model.dart';
+import 'package:just_audio/just_audio.dart';
 
 class AudioPlayerView extends StatefulWidget {
   final PodcastModel audio;
@@ -46,7 +46,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.audio.title))),
+        appBar: AppBar(title: Text(widget.audio.title)));
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -150,8 +150,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView> {
             const Spacer(),
           ],
         ),
-      ),
+
     );
+
   }
 
   String _formatTime(Duration duration) {
