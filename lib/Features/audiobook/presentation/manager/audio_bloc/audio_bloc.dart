@@ -7,10 +7,10 @@ class AudioBloc extends Bloc<AudioEvent, AudioState> {
   final PodcastRepo repo;
 
   AudioBloc(this.repo) : super(AudioInitial()) {
-    on<FetchAudioBooksEvent>(_onFetchAudioBooks);
+    on<FetchAudioBooksEvent>(_onFetchPodcast);
   }
 
-  Future<void> _onFetchAudioBooks(
+  Future<void> _onFetchPodcast(
     FetchAudioBooksEvent event,
     Emitter<AudioState> emit,
   ) async {

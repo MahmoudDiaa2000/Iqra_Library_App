@@ -73,7 +73,7 @@ class BestSellerListViewItem extends StatelessWidget {
                             .textTheme
                             .bodySmall
                             ?.copyWith(
-                            fontSize: 14
+                            fontSize: 10
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iqra_library_app/core/utils/app_router.dart';
@@ -87,8 +88,14 @@ class _SplashViewBodyState extends State<SplashViewBody>
   }
 
   void navigateToHome() {
-    Future.delayed(const Duration(seconds: 10), () {
-      GoRouter.of(context).push(AppRouter.kHomeView);
+    Future.delayed(const Duration(seconds: 3), () {
+      final user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        GoRouter.of(context).pushReplacement(AppRouter.kHomeView);
+      } else {
+        GoRouter.of(context).pushReplacement('/login');
+      }
     });
   }
 }

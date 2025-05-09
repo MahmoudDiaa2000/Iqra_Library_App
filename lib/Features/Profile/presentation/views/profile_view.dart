@@ -1,5 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:iqra_library_app/Features/auth/presentation/manager/auth_bloc/auth_bloc.dart';
+import 'package:iqra_library_app/Features/auth/presentation/manager/auth_bloc/auth_event.dart';
 import 'package:iqra_library_app/core/utils/app_config_provider.dart';
+import 'package:iqra_library_app/core/utils/app_router.dart';
 import 'package:provider/provider.dart';
 
 class ProfileView extends StatelessWidget {
@@ -7,6 +13,8 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile', style: Theme.of(context).textTheme.bodyMedium),
@@ -23,10 +31,15 @@ class ProfileView extends StatelessWidget {
           const SizedBox(height: 16),
           Center(
             child: Text(
-              'Diaa',
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+              user?.email ?? 'Unknown',
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
             ),
           ),
           const SizedBox(height: 30),
@@ -48,6 +61,23 @@ class ProfileView extends StatelessWidget {
             },
           ),
           const Divider(),
+
+          const Divider(),
+          const SizedBox(height: 20),
+          ElevatedButton.icon(
+            icon: const Icon(Icons.logout),
+            label: const Text('Logout'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+            ),
+            onPressed: () {
+              context.read<AuthBloc>().add(AuthLogoutRequested());
+              GoRouter.of(context).go(AppRouter.kLoginView);
+            },
+          ),
+
         ],
       ),
     );

@@ -20,7 +20,10 @@ class BookDetailsViewBody extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 const SafeArea(child: CustomBookDetailsAppBar()),
                 BooksDetailsSection(bookModel: bookModel),
 
