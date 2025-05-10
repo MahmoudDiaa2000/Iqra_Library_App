@@ -17,7 +17,7 @@ class AuthRepo {
   Future<void> signUp({
     required String email,
     required String password,
-    required String username,
+
   }) async {
     final result = await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
@@ -27,7 +27,7 @@ class AuthRepo {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(result.user!.uid)
-        .set({'email': email, 'username': username});
+        .set({'email': email});
   }
 
   Future<void> signOut() async {

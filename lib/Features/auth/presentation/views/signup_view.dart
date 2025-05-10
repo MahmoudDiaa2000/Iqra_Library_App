@@ -14,14 +14,16 @@ class SignUpView extends StatelessWidget {
       appBar: AppBar(title: const Text('Sign Up')),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
+          print("AUTH STATE: $state");
+
           if (state is AuthError) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.message)));
           } else if (state is Authenticated) {
             GoRouter.of(context).go('/homeView');
           }
         },
+
         child: const Padding(
           padding: EdgeInsets.all(16.0),
           child: AuthForm(isLogin: false),

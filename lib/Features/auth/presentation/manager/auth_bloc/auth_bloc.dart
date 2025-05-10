@@ -36,7 +36,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await authRepo.signUp(
         email: event.email,
         password: event.password,
-        username: event.username,
       );
       emit(Authenticated());
     } catch (e) {

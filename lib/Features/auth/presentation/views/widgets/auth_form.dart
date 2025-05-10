@@ -58,7 +58,6 @@ class _AuthFormState extends State<AuthForm> {
                     AuthRegisterRequested(
                       email: email,
                       password: password,
-                      username: email,
                     ),
                   );
                 }
