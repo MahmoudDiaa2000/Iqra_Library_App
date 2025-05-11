@@ -7,17 +7,17 @@ class BooksViewModel extends ChangeNotifier {
 
   BooksViewModel(this._featuredBooksRepo);
 
-  List<BookModel> books = [];
+  List<OpenLibraryBookModel> books = [];
   bool isLoading = false;
   String? errorMessage;
 
-  Future<void> fetchBooks() async {
+  Future<void> fetchBooks(String query) async {
     isLoading = true;
     errorMessage = null;
     notifyListeners();
 
     try {
-      books = await _featuredBooksRepo.fetchBooks();
+      books = await _featuredBooksRepo.fetchFeaturedBooks(query: query);
     } catch (e) {
       errorMessage = e.toString();
     }

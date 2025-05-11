@@ -79,8 +79,9 @@ abstract class AppRouter {
         path: kBookDetailsView,
         pageBuilder: (context, state) {
           final data = state.extra as Map<String, dynamic>;
-          final book = data['bookModel'] as BookModel;
-          final books = data['books'] as List<BookModel>;
+          final book = data['bookModel'] as OpenLibraryBookModel;
+          final books = data['books'] as List<OpenLibraryBookModel>;
+
 
           return CustomTransitionPage(
             key: state.pageKey,

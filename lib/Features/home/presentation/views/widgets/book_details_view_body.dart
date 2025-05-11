@@ -5,8 +5,9 @@ import 'package:iqra_library_app/Features/home/presentation/views/widgets/custom
 import 'package:iqra_library_app/Features/home/presentation/views/widgets/similar_books_section.dart';
 
 class BookDetailsViewBody extends StatelessWidget {
-  final BookModel bookModel;
-  final List<BookModel> books;
+  final OpenLibraryBookModel bookModel;
+  final List<OpenLibraryBookModel> books;
+
 
   const BookDetailsViewBody(
       {super.key, required this.bookModel, required this.books});

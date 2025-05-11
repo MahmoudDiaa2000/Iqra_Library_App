@@ -4,8 +4,7 @@ import 'package:iqra_library_app/Features/home/data/models/book_model.dart';
 import 'package:iqra_library_app/core/utils/app_router.dart';
 
 class SimilarBooksListView extends StatelessWidget {
-  final List<BookModel> books;
-
+  final List<OpenLibraryBookModel> books;
   const SimilarBooksListView({super.key, required this.books});
 
   @override
@@ -31,16 +30,16 @@ class SimilarBooksListView extends StatelessWidget {
 
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  book.thumbnail ?? 'https://via.placeholder.com/150',
-                  fit: BoxFit.cover,
-                  width: 100,
-                  errorBuilder: (context, error, stackTrace) =>
-                  const Icon(Icons.book),
-                ),
+              child: Image.network(
+                book.coverImageUrl.isNotEmpty
+                    ? book.coverImageUrl
+                    : 'https://via.placeholder.com/150',
+                fit: BoxFit.cover,
+                width: 100,
+                errorBuilder: (context, error, stackTrace) =>
+                const Icon(Icons.book),
               ),
+
             ),
           );
         },

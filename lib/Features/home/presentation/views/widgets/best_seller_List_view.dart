@@ -3,7 +3,7 @@ import 'package:iqra_library_app/Features/home/data/models/book_model.dart';
 import 'package:iqra_library_app/Features/home/presentation/views/widgets/best_seller_list_viwe_item.dart';
 
 class BestSellerListView extends StatelessWidget {
-  final List<BookModel> books;
+  final List<OpenLibraryBookModel> books;
 
   const BestSellerListView({super.key, required this.books});
 

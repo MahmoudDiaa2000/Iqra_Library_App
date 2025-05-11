@@ -35,12 +35,8 @@ class HomeViewBody extends StatelessWidget {
 
           return RefreshIndicator(
             onRefresh: () async {
-              context.read<BooksBloc>().add(FetchBooksEvent([
-                'science',
-                'technology',
-                'self-development',
-                'programming'
-              ]));
+              context.read<BooksBloc>().add(FetchBooksEvent(['programming']));
+
             },
 
 

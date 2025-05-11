@@ -7,8 +7,8 @@ class BooksInitial extends BooksState {}
 class BooksLoading extends BooksState {}
 
 class BooksSuccess extends BooksState {
-  final List<BookModel> featuredBooks;
-  final List<BookModel> bestSellerBooks;
+  final List<OpenLibraryBookModel> featuredBooks;
+  final List<OpenLibraryBookModel> bestSellerBooks;
 
   BooksSuccess(this.featuredBooks, this.bestSellerBooks);
 }

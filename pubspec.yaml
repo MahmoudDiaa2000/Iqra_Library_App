@@ -48,6 +48,8 @@ dependencies:
   firebase_auth: ^4.17.4
   google_sign_in: ^6.1.5
   cloud_firestore: ^4.13.0
+  flutter_pdfview: ^1.2.5
+  path_provider: ^2.1.2
 
 
 

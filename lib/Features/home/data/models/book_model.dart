@@ -1,52 +1,39 @@
-class BookModel {
+class OpenLibraryBookModel {
   final String title;
   final List<String> authors;
-  final String? thumbnail;
-  final String? description;
-  final String? previewLink;
-  final String? buyLink;
-  final String? accessLink;
+  final String coverImageUrl;
+  final String readableUrl;
   final String? price;
   final bool isFree;
-  final String? infoLink;
-  final double? averageRating;
-  final int? ratingsCount;
+  final String? editionKey;
 
-  BookModel({
+  OpenLibraryBookModel({
     required this.title,
     required this.authors,
-    this.thumbnail,
-    this.description,
-    this.previewLink,
-    this.buyLink,
-    this.accessLink,
+    required this.coverImageUrl,
+    required this.readableUrl,
     this.price,
-    required this.isFree,
-    this.infoLink,
-    this.averageRating,
-    this.ratingsCount,
+    this.isFree = true,
+    this.editionKey,
   });
 
-  factory BookModel.fromJson(Map<String, dynamic> json) {
-    final volumeInfo = json['volumeInfo'] ?? {};
-    final saleInfo = json['saleInfo'] ?? {};
-    final accessInfo = json['accessInfo'] ?? {};
-
-    return BookModel(
-      title: volumeInfo['title'] ?? 'No Title',
+  factory OpenLibraryBookModel.fromJson(Map<String, dynamic> json) {
+    return OpenLibraryBookModel(
+      title: json['title'] ?? 'No Title',
       authors:
-          (volumeInfo['authors'] as List?)?.cast<String>() ??
+          (json['author_name'] as List?)?.map((a) => a.toString()).toList() ??
           ['Unknown Author'],
-      thumbnail: volumeInfo['imageLinks']?['thumbnail'],
-      description: volumeInfo['description'],
-      previewLink: volumeInfo['previewLink'],
-      buyLink: saleInfo['buyLink'],
-      accessLink: accessInfo['webReaderLink'],
-      price: saleInfo['listPrice']?['amount']?.toString(),
-      isFree: saleInfo['saleability'] == 'FREE',
-      infoLink: volumeInfo['infoLink'],
-      averageRating: (volumeInfo['averageRating'] as num?)?.toDouble(),
-      ratingsCount: volumeInfo['ratingsCount'] as int?,
+      coverImageUrl:
+          json['cover_i'] != null
+              ? 'https://covers.openlibrary.org/b/id/${json['cover_i']}-L.jpg'
+              : '',
+      readableUrl:
+          json['key'] != null
+              ? 'https://openlibrary.org${json['key']}/read'
+              : '',
+      price: null,
+      isFree: true,
+      editionKey: (json['edition_key'] as List?)?.firstOrNull,
     );
   }
 }

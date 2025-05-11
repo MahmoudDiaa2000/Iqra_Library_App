@@ -12,7 +12,7 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
+      appBar: AppBar(),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthError) {
@@ -23,49 +23,51 @@ class LoginView extends StatelessWidget {
             GoRouter.of(context).go(AppRouter.kHomeView);
           }
         },
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                // Logo + App Name
-                Column(
-                  children: [
-                    const Icon(Icons.auto_stories_outlined, size: 100),
-                    // const SizedBox(height: 10),
-                    Text(
-                      'IQRA ',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 40,
-                      ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Logo + App Name
+              Column(
+                children: [
+                  const Icon(Icons.auto_stories_outlined, size: 100),
+                  Text(
+                    'IQRA ',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40,
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
 
-                const SizedBox(height: 40),
+              const SizedBox(height: 40),
 
-                // Login Form
-                const AuthForm(isLogin: true),
+              // Login Form
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: const AuthForm(isLogin: true),
+              ),
 
-                const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-                // Create Account Text Button
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Don't have an account?"),
-
-                    TextButton(
-                      onPressed: () {
-                        GoRouter.of(context).push(AppRouter.kSignUpView);
-                      },
-                      child: const Text("Create Account"),
+              // Create Account Text Button
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Don't have an account?"),
+                  TextButton(
+                    onPressed: () {
+                      GoRouter.of(context).push(AppRouter.kSignUpView);
+                    },
+                    child: const Text(
+                      "Create Account",
+                      style: TextStyle(color: Colors.blueGrey),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

@@ -10,15 +10,25 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     on<FetchBooksEvent>(_onFetchBooksEvent);
   }
 
-  Future<void> _onFetchBooksEvent(
-    FetchBooksEvent event,
-    Emitter<BooksState> emit,
-  ) async {
+  Future<void> _onFetchBooksEvent(FetchBooksEvent event,
+      Emitter<BooksState> emit) async {
     emit(BooksLoading());
 
     try {
-      final query = event.subjects.map((s) => s).join('+');
+      // مؤقتاً استخدم query واحد مباشر
+      final query = 'programming';
       final books = await featuredBooksRepo.fetchFeaturedBooks(query: query);
+      print('Books fetched: ${books.length}');
+      print('First book (if any): ${books.isNotEmpty
+          ? books.first.title
+          : 'none'}');
+
+      if (books.isEmpty) {
+        print('No books returned from query');
+        emit(BooksFailure('No books found for this category.'));
+        return;
+      }
+
 
       final half = books.length ~/ 2;
       final featuredBooks = books.take(half).toList();
@@ -30,3 +40,4 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     }
   }
 }
+

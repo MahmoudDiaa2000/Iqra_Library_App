@@ -3,7 +3,7 @@ import 'package:iqra_library_app/Features/home/data/models/book_model.dart';
 import 'package:iqra_library_app/Features/home/presentation/views/widgets/similar_books_list_view.dart';
 
 class SimilarBooksSection extends StatelessWidget {
-  final List<BookModel> books;
+  final List<OpenLibraryBookModel> books;
 
   const SimilarBooksSection({super.key, required this.books});
 

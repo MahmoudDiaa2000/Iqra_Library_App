@@ -7,18 +7,23 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final FeaturedBooksRepo featuredBooksRepo;
 
   SearchBloc(this.featuredBooksRepo) : super(SearchInitial()) {
-    on<SearchEvent>((event, emit) async {
-      if (event is SearchBooksEvent) {
-        emit(SearchLoading());
-        try {
-          final books = await featuredBooksRepo.fetchFeaturedBooks(
-            query: event.query,
-          );
-          emit(SearchSuccess(books));
-        } catch (e) {
-          emit(SearchFailure(e.toString()));
-        }
-      }
-    });
+    on<SearchBooksEvent>(_onSearchBooks);
   }
+
+  Future<void> _onSearchBooks(SearchBooksEvent event,
+      Emitter<SearchState> emit) async {
+    emit(SearchLoading());
+    try {
+      final books = await featuredBooksRepo.fetchFeaturedBooks(
+          query: event.query);
+
+      final filteredBooks = books.where((book) => book.coverImageUrl.isNotEmpty)
+          .toList();
+
+      emit(SearchSuccess(filteredBooks));
+    } catch (e) {
+      emit(SearchFailure(e.toString()));
+    }
+  }
+
 }

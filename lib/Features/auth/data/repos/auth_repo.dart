@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepo {
   final FirebaseAuth _firebaseAuth;
@@ -31,10 +32,38 @@ class AuthRepo {
   }
 
   Future<void> signOut() async {
+    await GoogleSignIn().signOut();
     await _firebaseAuth.signOut();
   }
 
   User? get currentUser => _firebaseAuth.currentUser;
 
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+
+
+  Future<void> signInWithGoogle() async {
+    final googleUser = await GoogleSignIn().signIn();
+    if (googleUser == null) return;
+
+    final googleAuth = await googleUser.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    await FirebaseAuth.instance.signInWithCredential(credential);
+
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    final userDoc = await FirebaseFirestore.instance.collection('users').doc(
+        uid).get();
+
+    if (!userDoc.exists) {
+      await FirebaseFirestore.instance.collection('users').doc(uid).set({
+        'email': googleUser.email,
+      });
+    }
+  }
+
 }
+
+

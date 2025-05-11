@@ -5,7 +5,7 @@ import 'package:iqra_library_app/Features/home/presentation/views/widgets/book_r
 import 'package:iqra_library_app/Features/home/presentation/views/widgets/custom_book_image.dart';
 
 class BooksDetailsSection extends StatelessWidget {
-  final BookModel bookModel;
+  final OpenLibraryBookModel bookModel;
 
   const BooksDetailsSection({super.key, required this.bookModel});
 
@@ -22,12 +22,12 @@ class BooksDetailsSection extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.2),
           child: CustomBookImage(
-            imageUrl: bookModel.thumbnail ?? 'https://via.placeholder.com/150',
+            imageUrl: bookModel.coverImageUrl.isNotEmpty
+                ? bookModel.coverImageUrl
+                : 'https://via.placeholder.com/150',
           ),
         ),
-
         const SizedBox(height: 24),
-
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
@@ -40,9 +40,7 @@ class BooksDetailsSection extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
-
         const SizedBox(height: 10),
-
         Text(
           bookModel.authors.isNotEmpty
               ? bookModel.authors.join(', ')
@@ -57,35 +55,12 @@ class BooksDetailsSection extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
-
-        const SizedBox(height: 20),
-
-        if (bookModel.description != null)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              bookModel.description!,
-              textAlign: TextAlign.justify,
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .titleLarge,
-              maxLines: 8,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-
         const SizedBox(height: 24),
-
         BookRating(bookModel: bookModel),
-
         const SizedBox(height: 32),
-
         BooksAction(bookModel: bookModel),
-
         const SizedBox(height: 30),
       ],
     );
   }
 }
-

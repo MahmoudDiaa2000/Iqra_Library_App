@@ -4,7 +4,7 @@ import 'package:iqra_library_app/Features/home/data/models/book_model.dart';
 import 'package:iqra_library_app/core/utils/app_router.dart';
 
 class FeaturedBooksListView extends StatelessWidget {
-  final List<BookModel> books;
+  final List<OpenLibraryBookModel> books;
 
   const FeaturedBooksListView({super.key, required this.books});
 
@@ -23,6 +23,7 @@ class FeaturedBooksListView extends StatelessWidget {
           final book = books[index];
           return GestureDetector(
             onTap: () {
+              final url = book.readableUrl;
               GoRouter.of(context).push(
                 AppRouter.kBookDetailsView,
                 extra: {
@@ -37,21 +38,18 @@ class FeaturedBooksListView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 child: Container(
                   width: 150,
-
                   decoration: BoxDecoration(
                     color: Colors.grey.shade300,
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  child: Image.network(
-                    book.thumbnail ?? 'https://via.placeholder.com/150',
+                  child: book.coverImageUrl.isNotEmpty
+                      ? Image.network(
+                    book.coverImageUrl,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: Colors.grey,
-                        child: const Icon(Icons.book, size: 60),
-                      );
-                    },
-                  ),
+                    errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.book, size: 60),
+                  )
+                      : const Icon(Icons.book, size: 60),
                 ),
               ),
             ),

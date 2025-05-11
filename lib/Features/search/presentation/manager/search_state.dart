@@ -7,7 +7,7 @@ class SearchInitial extends SearchState {}
 class SearchLoading extends SearchState {}
 
 class SearchSuccess extends SearchState {
-  final List<BookModel> books;
+  final List<OpenLibraryBookModel> books;
 
   SearchSuccess(this.books);
 }
