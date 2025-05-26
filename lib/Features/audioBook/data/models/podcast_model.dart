@@ -4,7 +4,7 @@ class PodcastModel {
   final String publisher;
   final String image;
   final String audio;
-
+  final String description;
   String get author => publisher;
 
   PodcastModel({
@@ -13,6 +13,7 @@ class PodcastModel {
     required this.publisher,
     required this.image,
     required this.audio,
+    required this.description,
   });
 
   factory PodcastModel.fromJson(Map<String, dynamic> json) {
@@ -22,6 +23,7 @@ class PodcastModel {
       publisher: json['podcast']?['publisher'] ?? 'Unknown Publisher',
       image: json['podcast']?['image'] ?? '',
       audio: json['audio'] ?? '',
+      description: json['description_original'] ?? '',
     );
   }
 }

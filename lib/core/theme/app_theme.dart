@@ -6,6 +6,11 @@ class AppTheme {
     primaryColorLight: AppColors.primaryLightColor,
     scaffoldBackgroundColor: Color(0xffe1e1e1),
 
+    colorScheme: ColorScheme.light(
+      primary: Colors.black,
+      onPrimary: Colors.white,
+    ),
+
     cardColor: Colors.white54,
     appBarTheme: const AppBarTheme(
       centerTitle: true,
@@ -56,11 +61,16 @@ class AppTheme {
     primaryColorLight: AppColors.primaryDarkColor,
     scaffoldBackgroundColor: AppColors.primaryDarkColor,
     // (Color 0xff141A2E)
+    colorScheme: ColorScheme.dark(
+      primary: Colors.white,
+      onPrimary: Colors.black,
+    ),
     cardColor: AppColors.primaryDark2Color,
     appBarTheme: const AppBarTheme(
       centerTitle: true,
       backgroundColor: Colors.transparent,
       elevation: 0.0,
+
       iconTheme: IconThemeData(color: Colors.white),
       // Dark Mode
       titleTextStyle: TextStyle(

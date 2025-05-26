@@ -17,7 +17,16 @@ class BooksViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      books = await _featuredBooksRepo.fetchBooks();
+      final allBooks = await _featuredBooksRepo.fetchBooks();
+
+      books =
+          allBooks.where((book) {
+            final hasValidBuyLink = book.buyLink?.isNotEmpty == true;
+            final isFree = book.isFree;
+            final hasPrice = book.price?.isNotEmpty == true;
+
+            return isFree || (hasValidBuyLink && hasPrice);
+          }).toList();
     } catch (e) {
       errorMessage = e.toString();
     }
