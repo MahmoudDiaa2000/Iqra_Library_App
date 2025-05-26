@@ -88,13 +88,15 @@ class _SplashViewBodyState extends State<SplashViewBody>
   }
 
   void navigateToHome() {
-    Future.delayed(const Duration(seconds: 3), () {
-      final user = FirebaseAuth.instance.currentUser;
+    animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        final user = FirebaseAuth.instance.currentUser;
 
-      if (user != null) {
-        GoRouter.of(context).pushReplacement(AppRouter.kHomeView);
-      } else {
-        GoRouter.of(context).pushReplacement('/login');
+        if (user != null) {
+          GoRouter.of(context).pushReplacement(AppRouter.kHomeView);
+        } else {
+          GoRouter.of(context).pushReplacement('/login');
+        }
       }
     });
   }

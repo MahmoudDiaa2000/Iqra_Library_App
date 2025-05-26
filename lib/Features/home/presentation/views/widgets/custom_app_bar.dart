@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:iqra_library_app/core/utils/app_router.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key});
@@ -31,20 +29,7 @@ class CustomAppBar extends StatelessWidget {
               fontSize: 25,
             ),
           ),
-          const Spacer(),
-          IconButton(
-            onPressed: () {
-              GoRouter.of(context).push(AppRouter.kSearchView);
-            },
-            icon: Icon(
-              Icons.search,
-              size: 34,
-              color: Theme
-                  .of(context)
-                  .iconTheme
-                  .color,
-            ),
-          ),
+
         ],
       ),
     );

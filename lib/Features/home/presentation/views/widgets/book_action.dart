@@ -12,13 +12,8 @@ class BooksAction extends StatelessWidget {
   Future<void> _launchIfValid(BuildContext context, String? url) async {
     if (url != null &&
         url.trim().isNotEmpty &&
-        Uri
-            .tryParse(url)
-            ?.hasAbsolutePath == true &&
-        Uri
-            .parse(url)
-            .scheme
-            .startsWith('http') &&
+        Uri.tryParse(url)?.hasAbsolutePath == true &&
+        Uri.parse(url).scheme.startsWith('http') &&
         await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
     } else {
@@ -27,25 +22,40 @@ class BooksAction extends StatelessWidget {
       );
     }
   }
+
+  String? _getValidUrl(BookModel book) {
+    if (_isValidUrl(book.buyLink)) return book.buyLink;
+    if (_isValidUrl(book.infoLink)) return book.infoLink;
+    if (_isValidUrl(book.previewLink)) return book.previewLink;
+    if (_isValidUrl(book.accessLink)) return book.accessLink;
+    return null;
+  }
+
+  bool _isValidUrl(String? url) {
+    if (url == null || url.trim().isEmpty) return false;
+    final uri = Uri.tryParse(url);
+    return uri != null && uri.hasAbsolutePath && uri.scheme.startsWith('http');
+  }
+
   @override
   Widget build(BuildContext context) {
     final isFree = bookModel.isFree;
-    final hasPrice = bookModel.price != null &&
-        bookModel.price!.trim().isNotEmpty;
-    final buyLink = bookModel.buyLink;
+    final hasPrice =
+        bookModel.price != null && bookModel.price!.trim().isNotEmpty;
+    final validUrl = _getValidUrl(bookModel);
+    var isLinkAvailable = validUrl != null;
 
-    String? buttonLabel;
-    if (isFree) {
+    String buttonLabel;
+    if (!isLinkAvailable) {
+      buttonLabel = 'Unavailable';
+    } else if (isFree) {
       buttonLabel = 'Free';
     } else if (hasPrice) {
       buttonLabel = '\$${bookModel.price!}';
     } else {
-      buttonLabel = 'Buy';
+      buttonLabel = 'Unavailable';
+      isLinkAvailable = false;
     }
-
-    final url = bookModel.infoLink ?? bookModel.previewLink;
-
-
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -54,54 +64,16 @@ class BooksAction extends StatelessWidget {
           Expanded(
             child: CustomButton(
               text: buttonLabel,
-              backgroundColor: Colors.amber,
-              textColor: Theme
-                  .of(context)
-                  .colorScheme
-                  .onPrimary,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16),
-                bottomLeft: Radius.circular(16),
-                  bottomRight: Radius.circular(16),
-                  topRight: Radius.circular(16)
-              ),
-              onPressed: () {
-                final url = bookModel.infoLink ?? bookModel.previewLink;
-
-
-                if (url == null ||
-                    url
-                        .trim()
-                        .isEmpty ||
-                    !Uri
-                        .parse(url)
-                        .isAbsolute) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('No available online link for this book'),
-                    ),
-                  );
-                  return;
-                }
-
-                _launchIfValid(context, url);
-              },
-            )
-
+              backgroundColor:
+                  isLinkAvailable ? Colors.amber : Colors.grey.shade300,
+              textColor: Theme.of(context).colorScheme.onPrimary,
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
+              onPressed:
+                  isLinkAvailable
+                      ? () => _launchIfValid(context, validUrl)
+                      : null,
+            ),
           ),
-          // Expanded(
-          //   child: CustomButton(
-          //     text: 'Free Preview',
-          //     backgroundColor: Colors.amber,
-          //     textColor: Colors.white,
-          //     borderRadius: const BorderRadius.only(
-          //       topRight: Radius.circular(16),
-          //       bottomRight: Radius.circular(16),
-          //     ),
-          //     onPressed: () => _launchIfValid(context, bookModel.previewLink),
-          //   ),
-          // )
-          // ,
         ],
       ),
     );

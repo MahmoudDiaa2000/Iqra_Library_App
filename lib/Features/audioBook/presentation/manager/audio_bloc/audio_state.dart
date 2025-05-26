@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:iqra_library_app/Features/audiobook/data/models/podcast_model.dart';
+import 'package:iqra_library_app/Features/audioBook/data/models/podcast_model.dart';
 
 abstract class AudioState extends Equatable {
   const AudioState();

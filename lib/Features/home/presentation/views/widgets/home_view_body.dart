@@ -21,6 +21,8 @@ class HomeViewBody extends StatelessWidget {
           return const BooksLoadingWidget();
         } else if (state is BooksFailure) {
           return BooksErrorWidget(errorMessage: state.errorMessage);
+        } else if (state is BooksInitial) {
+          return const Center(child: CircularProgressIndicator());
         } else if (state is BooksSuccess) {
           final books = [...state.featuredBooks, ...state.bestSellerBooks];
 
@@ -45,7 +47,8 @@ class HomeViewBody extends StatelessWidget {
 
 
             child: CustomScrollView(
-              slivers: [
+
+            slivers: [
                 SliverToBoxAdapter(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

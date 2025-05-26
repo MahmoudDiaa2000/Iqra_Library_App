@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iqra_library_app/Features/Profile/presentation/views/profile_view.dart';
-import 'package:iqra_library_app/Features/audiobook/presentation/views/audio_book_view.dart';
+import 'package:iqra_library_app/Features/audioBook/presentation/views/audio_book_view.dart';
 import 'package:iqra_library_app/Features/home/presentation/views/widgets/home_view_body.dart';
 import 'package:iqra_library_app/Features/search/presentation/views/search_view.dart';
 
@@ -60,7 +60,7 @@ class _HomeViewState extends State<HomeView> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.headphones),
-            label: 'Audiobooks',
+            label: 'Podcasts',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iqra_library_app/Features/Profile/presentation/views/profile_view.dart';
-import 'package:iqra_library_app/Features/audiobook/data/models/podcast_model.dart';
-import 'package:iqra_library_app/Features/audiobook/presentation/views/auido_player_view.dart';
+import 'package:iqra_library_app/Features/audioBook/data/models/podcast_model.dart';
+import 'package:iqra_library_app/Features/audioBook/presentation/views/auido_player_view.dart';
+
 import 'package:iqra_library_app/Features/auth/presentation/views/login_view.dart';
 import 'package:iqra_library_app/Features/auth/presentation/views/signup_view.dart';
 import 'package:iqra_library_app/Features/home/data/models/book_model.dart';

@@ -1,4 +1,4 @@
-import 'package:iqra_library_app/Features/audiobook/data/models/podcast_model.dart';
+import 'package:iqra_library_app/Features/audioBook/data/models/podcast_model.dart';
 import 'package:iqra_library_app/core/listen_notes_service.dart';
 
 class PodcastRepo {

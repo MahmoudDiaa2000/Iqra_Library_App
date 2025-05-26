@@ -10,15 +10,20 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     on<FetchBooksEvent>(_onFetchBooksEvent);
   }
 
-  Future<void> _onFetchBooksEvent(
-    FetchBooksEvent event,
-    Emitter<BooksState> emit,
-  ) async {
-    emit(BooksLoading());
+  Future<void> _onFetchBooksEvent(FetchBooksEvent event,
+      Emitter<BooksState> emit,) async {
+    // Force rebuild even if same data comes
+    emit(BooksInitial());
+    await Future.delayed(const Duration(milliseconds: 100));
 
     try {
-      final query = event.subjects.map((s) => s).join('+');
-      final books = await featuredBooksRepo.fetchFeaturedBooks(query: query);
+      final timestamp = DateTime.now().second;
+      final query = '${event.subjects.join('+')}+$timestamp';
+
+      // Append timestamp to bypass caching
+      final books = await featuredBooksRepo.fetchFeaturedBooks(
+        query: '$query&timestamp=${DateTime.now().millisecondsSinceEpoch}',
+      );
 
       final half = books.length ~/ 2;
       final featuredBooks = books.take(half).toList();

@@ -17,7 +17,7 @@ class ProfileView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile', style: Theme.of(context).textTheme.bodyMedium),
+        title: Text('Profile', style: Theme.of(context).textTheme.titleLarge),
         centerTitle: true,
       ),
       body: ListView(
@@ -25,10 +25,25 @@ class ProfileView extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 100,
-            backgroundImage: NetworkImage(
-                'https://unsplash.com/s/photos/profile'),
+            backgroundImage:
+                user?.photoURL != null && user!.photoURL!.isNotEmpty
+                    ? NetworkImage(user.photoURL!)
+                    : const AssetImage('assets/images/profile.jpg')
+                        as ImageProvider,
           ),
           const SizedBox(height: 16),
+          if (user?.displayName != null)
+            Center(
+              child: Text(
+                user!.displayName!,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+          const SizedBox(height: 8),
+
           Center(
             child: Text(
               user?.email ?? 'Unknown',
@@ -62,8 +77,7 @@ class ProfileView extends StatelessWidget {
           ),
           const Divider(),
 
-          const Divider(),
-          const SizedBox(height: 20),
+          const SizedBox(height: 40),
           ElevatedButton.icon(
             icon: const Icon(Icons.logout),
             label: const Text('Logout'),
